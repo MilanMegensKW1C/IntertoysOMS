@@ -1,6 +1,3 @@
-<?php
-    include('../Includes/DB.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="../styles/Login.css">
-    <title>Inloggen</title>
+    <title>Registreren</title>
 </head>
 <body class="loginpagina">
     <!-- Titel van de pagina -->
@@ -18,11 +15,29 @@
     
     <!-- Inlogformulier -->
     <div class="form">
-        <h1>Login</h1>
+        <h1>Registreer</h1>
         <form action="login.php" method="post">
+            <!-- Voornaam en Achternaam op één regel -->
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="firstname">Voornaam</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+                <div class="input-group">
+                    <label for="lastname">Achternaam</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+            </div>
+
+            <!-- Adres veld -->
+            <div class="input-group">
+                <label for="address">Adres</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
             <!-- Email veld -->
             <div class="input-group">
-                <label for="email">Email / Gebruikersnaam</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
 
@@ -32,20 +47,12 @@
                 <input type="password" id="password" name="password" required>
             </div>
 
-            <!-- Extra opties onder wachtwoord -->
-            <div class="extra">
-                <div class="remember">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Onthouden</label>
-                </div>
-            </div>
-
-            <!-- Inlog knop -->
-            <input type="submit" value="Log in">
+            <!-- Registreer knop -->
+            <input type="submit" value="Registreer">
 
             <!-- Account aanmaken -->
             <div class="account-link">
-                <a href="register.php">Maak een account aan</a>
+                <a href="login.php">Inloggen</a>
             </div>
         </form>
     </div>

@@ -1,0 +1,150 @@
+.loginpagina {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    font-family: Chaloops, sans-serif;
+    background-color: #ffdc00;
+}
+
+/* Titel links */
+.loginpagina .titel {
+    color: #fff;             
+    -webkit-text-stroke: 2px black;
+    font-weight: bold;
+    font-size: 80px;
+    text-align: center;
+}
+
+/* Formulier container */
+.loginpagina .form {
+    height: 70vh;
+    width: 20vw;
+    background-color: #fff;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Titel van formulier */
+.loginpagina .form h1 {
+    font-size: 28px;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.loginpagina .form label {
+    align-self: flex-start;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Input velden */
+.loginpagina .form form input[type="email"],
+.loginpagina .form form input[type="password"],
+.loginpagina .form form input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    margin: 0 0 0 0;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    font-size: 16px;
+}
+
+/* Extra opties (onthouden + wachtwoord vergeten) */
+.loginpagina .form .extra {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.loginpagina .form .extra .remember {
+    display: flex;
+    align-items: center;
+}
+
+.loginpagina .form .extra .remember label {
+    margin-top: 1px;
+}
+
+.loginpagina .form .extra input {
+    margin-right: 5px;
+}
+
+/* Verzendknop */
+.loginpagina .form form input[type="submit"] {
+    padding: 8px 25px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background: white;
+    font-size: 18px;
+    letter-spacing: 5px;
+    cursor: pointer;
+    margin: 10px 0 20px 0;
+    transition: 0.2s ease;
+}
+
+.loginpagina .form form input[type="submit"]:hover {
+    background-color: #ffdc00;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.loginpagina .form form .account-link {
+    font-size: 14px;
+}
+
+.loginpagina .form form .account-link a {
+    color: #000;
+    transition: color 0.3s;
+}
+
+.loginpagina .form form .account-link a:hover {
+    color: #ffdc00;
+}
+
+.loginpagina .form form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginpagina .form .input-group {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+}
+
+.loginpagina .form .input-group label {
+    margin-bottom: 2px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.input-row {
+    display: flex;
+    gap: 16px;
+    width: 90%;
+}
+
+.input-row .input-group {
+    flex: 1;
+    margin-bottom: 0;
+}

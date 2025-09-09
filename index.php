@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Aan het laden...</title>
 </head>
-<body>
-    Skibidi Stijn
-</body>
 </html>
+<?php
+// Direct doorsturen naar login.php
+header("Location: view/login.php");
+exit;
