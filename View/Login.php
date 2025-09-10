@@ -1,12 +1,15 @@
 <?php
     include('../Includes/DB.php');
+    $error = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link to external CSS file -->
+    <!-- Custom icon -->
+    <link rel="icon" type="image/x-icon" href="../Content/logo.ico">
+    <!-- Link voor css sheet -->
     <link rel="stylesheet" href="../styles/Login.css">
     <title>Inloggen</title>
 </head>
@@ -19,10 +22,15 @@
     <!-- Inlogformulier -->
     <div class="form">
         <h1>Login</h1>
-        <form action="login.php" method="post">
+        <?php if ($error): ?>
+            <div class="error-message" style="color:red; margin-bottom:10px;">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
+        <?php endif; ?>
+            <form action="../Controller/LoginController.php" method="post">
             <!-- Email veld -->
             <div class="input-group">
-                <label for="email">Email / Gebruikersnaam</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
 
