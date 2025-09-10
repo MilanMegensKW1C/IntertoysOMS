@@ -1,3 +1,14 @@
+<?php
+require_once __DIR__ . '/Includes/Session.php';
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: view/Dashboard.php");
+    exit;
+} else {
+    header("Location: view/Login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +17,3 @@
     <title>Aan het laden...</title>
 </head>
 </html>
-<?php
-// Direct doorsturen naar login.php
-header("Location: view/login.php");
-exit;

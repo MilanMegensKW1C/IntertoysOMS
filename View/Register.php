@@ -1,8 +1,21 @@
+<?php
+    require_once __DIR__ . '/../Controller/RegisterController.php';
+
+    //Controller aanroepen
+    $controller = new RegisterController();
+
+    //Gebruik store functie in de controller
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller->store();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Custom icon -->
+    <link rel="icon" type="image/x-icon" href="../Content/logo.ico">
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="../styles/Login.css">
     <title>Registreren</title>
@@ -16,7 +29,7 @@
     <!-- Inlogformulier -->
     <div class="form">
         <h1>Registreer</h1>
-        <form action="login.php" method="post">
+        <form action="register.php" method="post">
             <!-- Voornaam en Achternaam op één regel -->
             <div class="input-row">
                 <div class="input-group">
