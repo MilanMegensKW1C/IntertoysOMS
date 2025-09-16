@@ -6,7 +6,7 @@ body {
 }
 
 h1 {
-    color: #ffdc00;
+    color: #f9e505;
 }
 
 h2 {
@@ -57,3 +57,4 @@ table td {
 table tr:nth-child(even) {
     background: #f2f2f2;
 }
+

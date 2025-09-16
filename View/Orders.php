@@ -1,22 +1,17 @@
 <?php
-
 include('../Includes/DB.php');
 
+// Orders ophalen
 $sql = "
     SELECT 
         o.order_id,
         o.orderdatum,
         o.status,
-        CONCAT(k.voornaam, ' ', k.achternaam) AS klantnaam,
-        SUM(p.prijs * op.aantal) AS totaalprijs
+        CONCAT(u.voornaam, ' ', u.achternaam) AS klantnaam
     FROM `Order` o
-    JOIN Klant k ON o.klant_id = k.klant_id
-    JOIN Order_Product op ON o.order_id = op.order_id
-    JOIN Product p ON op.product_id = p.product_id
-    GROUP BY o.order_id, o.orderdatum, o.status, klantnaam
+    JOIN User u ON o.user_id = u.user_id
     ORDER BY o.orderdatum DESC
 ";
-
 $result = $conn->query($sql);
 
 $orders = [];
@@ -25,11 +20,19 @@ if ($result && $result->num_rows > 0) {
         $orders[] = $row;
     }
 }
+
+// Users ophalen (voor dropdown in formulier)
+$users = [];
+$resUsers = $conn->query("SELECT user_id, voornaam, achternaam FROM User");
+if ($resUsers && $resUsers->num_rows > 0) {
+    while ($u = $resUsers->fetch_assoc()) {
+        $users[] = $u;
+    }
+}
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,45 +44,50 @@ if ($result && $result->num_rows > 0) {
 
 <main>
     <h2>Orders</h2>
-    <button class="btn" id="openModalBtn">Order Toevoegen</button>
+    <button class="btn" id="openFormBtn">Order Toevoegen</button>
+
+<!-- Verborgen formulier -->
+<div id="orderFormContainer" style="display: none; margin-top: 20px;">
+    <form action="../Controller/add_order.php" method="post">
+        <label for="user_id">Klant:</label>
+        <select id="user_id" name="user_id" required>
+            <option value="">-- Kies een klant --</option>
+            <?php foreach ($users as $u): ?>
+                <option value="<?= $u['user_id'] ?>">
+                    <?= htmlspecialchars($u['voornaam'] . ' ' . $u['achternaam']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="datum">Orderdatum:</label>
+        <input type="date" id="datum" name="datum" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="In behandeling">In behandeling</option>
+            <option value="Verzonden">Verzonden</option>
+            <option value="Afgerond">Afgerond</option>
+        </select>
+
+        <button type="submit" class="btn">Opslaan</button>
+    </form>
+</div>
 
 </main>
-    
- <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModalBtn">&times;</span>
-            <h3>Nieuwe Order</h3>
-            <form action="add_order.php" method="post">
-                <label for="klant">Klantnaam:</label>
-                <input type="text" id="klant" name="klant" required>
 
-                <label for="datum">Orderdatum:</label>
-                <input type="date" id="datum" name="datum" required>
-
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value="In behandeling">In behandeling</option>
-                    <option value="Verzonden">Verzonden</option>
-                    <option value="Afgerond">Afgerond</option>
-                </select>
-
-                <button type="submit" class="btn">Opslaan</button>
-            </form>
-        </div>
-    </div>
-
- <div class="order-box">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order Id</th>
-                        <th>Orderdatum</th>
-                        <th>Klantnaam</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($orders as $o): ?>
+<!-- Orders tabel -->
+<div class="order-box">
+    <table>
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Orderdatum</th>
+                <th>Klantnaam</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($orders as $o): ?>
             <tr>
                 <td><?= htmlspecialchars($o['order_id']) ?></td>
                 <td><?= htmlspecialchars($o['orderdatum']) ?></td>
@@ -87,9 +95,10 @@ if ($result && $result->num_rows > 0) {
                 <td><?= htmlspecialchars($o['status']) ?></td>
             </tr>
             <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        <script src="/IntertoysOMS/View/OrderPopUp.js"></script>
+        </tbody>
+    </table>
+</div>
+
+<script src="/IntertoysOMS/Javascript/OrderPopUp.js"></script>
 </body>
 </html>
