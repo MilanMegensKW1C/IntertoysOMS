@@ -2,7 +2,7 @@
 include('../Includes/DB.php');
 
 // Producten ophalen
-$sql = $sql = "
+$sql = "
    SELECT 
         p.product_id,
         p.naam,
@@ -13,7 +13,6 @@ $sql = $sql = "
     FROM product p
     LEFT JOIN leverancier l ON p.leverancier_id = l.leverancier_id
     ORDER BY p.naam ASC
-
 ";
 
 $result = $conn->query($sql);
@@ -27,7 +26,7 @@ if ($result && $result->num_rows > 0) {
 
 // Leveranciers ophalen (voor dropdown in formulier)
 $leveranciers = [];
-$resLev = $conn->query("SELECT leverancier_id, naam FROM leverancier");
+$resLev = $conn->query("SELECT leverancier_id, bedrijfsnaam FROM leverancier");
 if ($resLev && $resLev->num_rows > 0) {
     while ($l = $resLev->fetch_assoc()) {
         $leveranciers[] = $l;
@@ -52,7 +51,7 @@ if ($resLev && $resLev->num_rows > 0) {
 
     <!-- Verborgen formulier -->
     <div id="orderFormContainer" style="display: none; margin-top: 20px;">
-        <form action="../Controller/add_product.php" method="post">
+        <form action="../Controller/ProductController.php" method="post">
             <label for="naam">Naam:</label>
             <input type="text" id="naam" name="naam" required>
 
@@ -70,7 +69,7 @@ if ($resLev && $resLev->num_rows > 0) {
                 <option value="">-- Kies een leverancier --</option>
                 <?php foreach ($leveranciers as $l): ?>
                     <option value="<?= $l['leverancier_id'] ?>">
-                        <?= htmlspecialchars($l['naam']) ?>
+                        <?= htmlspecialchars($l['bedrijfsnaam']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
