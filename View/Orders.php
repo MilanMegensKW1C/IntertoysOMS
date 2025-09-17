@@ -4,22 +4,45 @@ include('../Includes/DB.php');
 // Orders ophalen
 $sql = "
     SELECT 
-        o.order_id,
-        o.orderdatum,
-        o.status,
-        CONCAT(u.voornaam, ' ', u.achternaam) AS klantnaam
-    FROM `Order` o
-    JOIN User u ON o.user_id = u.user_id
-    ORDER BY o.orderdatum DESC
+    o.order_id,
+    o.orderdatum,
+    o.status,
+    CONCAT(u.voornaam, ' ', u.achternaam) AS klantnaam,
+    p.naam AS productnaam,
+    op.aantal
+FROM `Order` o
+JOIN User u ON o.user_id = u.user_id
+JOIN order_product op ON o.order_id = op.order_id
+JOIN product p ON op.product_id = p.product_id
+ORDER BY o.orderdatum DESC
+
 ";
 $result = $conn->query($sql);
 
 $orders = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $orders[] = $row;
+        $orderId = $row['order_id'];
+
+        // Zorg dat order slechts 1x bestaat
+        if (!isset($orders[$orderId])) {
+            $orders[$orderId] = [
+                'order_id' => $row['order_id'],
+                'orderdatum' => $row['orderdatum'],
+                'status' => $row['status'],
+                'klantnaam' => $row['klantnaam'],
+                'producten' => ['']
+            ];
+        }
+
+        // Voeg product toe
+        $orders[$orderId]['producten'][] = [
+            'naam' => $row['productnaam'],
+            'aantal' => $row['aantal']
+        ];
     }
 }
+
 
 // Users ophalen (voor dropdown in formulier)
 $users = [];
@@ -69,9 +92,27 @@ if ($resUsers && $resUsers->num_rows > 0) {
             <option value="Afgerond">Afgerond</option>
         </select>
 
+        <h4>Producten</h4>
+        <div id="productenContainer">
+            <div class="product-row">
+                <select name="producten[0][id]" required>
+                    <option value="">-- Kies een product --</option>
+                    <?php foreach ($producten as $p): ?>
+                        <option value="<?= $p['product_id'] ?>">
+                            <?= htmlspecialchars($p['naam']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <input type="number" name="producten[0][aantal]" min="1" value="1" required>
+            </div>
+        </div>
+
+        <button type="button" id="addProductRow" class="btn">+ Product toevoegen</button>
+        <br><br>
         <button type="submit" class="btn">Opslaan</button>
     </form>
 </div>
+
 
 </main>
 
@@ -84,18 +125,27 @@ if ($resUsers && $resUsers->num_rows > 0) {
                 <th>Orderdatum</th>
                 <th>Klantnaam</th>
                 <th>Status</th>
+                <th>Producten</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($orders as $o): ?>
-            <tr>
-                <td><?= htmlspecialchars($o['order_id']) ?></td>
-                <td><?= htmlspecialchars($o['orderdatum']) ?></td>
-                <td><?= htmlspecialchars($o['klantnaam']) ?></td>
-                <td><?= htmlspecialchars($o['status']) ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
+    <?php foreach ($orders as $o): ?>
+    <tr>
+        <td><?= htmlspecialchars($o['order_id']) ?></td>
+        <td><?= htmlspecialchars($o['orderdatum']) ?></td>
+        <td><?= htmlspecialchars($o['klantnaam']) ?></td>
+        <td><?= htmlspecialchars($o['status']) ?></td>
+        <td>
+            <ul>
+                <?php foreach ($o['producten'] as $p): ?>
+                    <li><?= htmlspecialchars($p['naam']) ?> (<?= htmlspecialchars($p['aantal']) ?>x)</li>
+                <?php endforeach; ?>
+            </ul>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</tbody>
+
     </table>
 </div>
 

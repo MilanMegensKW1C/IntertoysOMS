@@ -1,20 +1,23 @@
 console.log("OrderPopUp.js geladen");
 
 document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("openFormBtn");
-    const formContainer = document.getElementById("orderFormContainer");
+    let productIndex = 1;
+    const addProductBtn = document.getElementById("addProductRow");
+    const productenContainer = document.getElementById("productenContainer");
 
-    console.log("Button:", btn);
-    console.log("Form container:", formContainer);
-
-    if (btn) {
-        btn.addEventListener("click", () => {
-            console.log("Button geklikt");
-            if (formContainer.style.display === "none" || formContainer.style.display === "") {
-                formContainer.style.display = "block";
-            } else {
-                formContainer.style.display = "none";
-            }
+    if (addProductBtn) {
+        addProductBtn.addEventListener("click", () => {
+            const newRow = document.createElement("div");
+            newRow.classList.add("product-row");
+            newRow.innerHTML = `
+                <select name="producten[${productIndex}][id]" required>
+                    <option value="">-- Kies een product --</option>
+                    ${productenContainer.querySelector("select").innerHTML}
+                </select>
+                <input type="number" name="producten[${productIndex}][aantal]" min="1" value="1" required>
+            `;
+            productenContainer.appendChild(newRow);
+            productIndex++;
         });
     }
 });
