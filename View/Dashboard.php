@@ -22,8 +22,8 @@ if (!isset($_SESSION['user_id'])) {
         <h1>Welkom op het Dashboard</h1>
         <div class="dashboard-buttons">
             <a href="../View/" class="dashboard-btn">Product</a>
-            <a href="../View/" class="dashboard-btn">Leveranciers</a>
-            <a href="../View/" class="dashboard-btn">Facturen</a>
+            <a href="../View/Leveranciers.php" class="dashboard-btn">Leveranciers</a>
+            <a href="../View/Facturen.php" class="dashboard-btn">Facturen</a>
             <a href="../View/Orders.php" class="dashboard-btn">Orders</a>
         </div>
         <a href="../View/Logout.php" class="logout-link">Uitloggen</a>
