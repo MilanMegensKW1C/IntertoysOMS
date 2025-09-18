@@ -1,18 +1,28 @@
 <?php
-// Start of hervat session
+/**
+ * session.php
+ *
+ * Auteur: Milan
+ * Beschrijving: Start of hervat een sessie en slaat rol op waarmee is ingelogd
+ */
+
+// Start session
 session_start();
 
-require_once __DIR__ . '/DB.php';
+// Database connectie inladen
+require_once 'DB.php';
 
-// Check 'remember me' cookie
+// Controleer of er nog geen actieve sessie is, maar wél een cookie aanwezig is
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $userId = $_COOKIE['user_id'];
-    
+
+    // Haal de gebruiker op bij dit ID
     $stmt = $conn->prepare("SELECT * FROM user WHERE user_id = ?");
     $stmt->bind_param("i", $userId); 
     $stmt->execute();              
     $result = $stmt->get_result();
 
+    // Als de gebruiker bestaat, zet data in de sessie
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
@@ -22,7 +32,7 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     }
 }
 
-// Echo rol naar console
+// Log de huidige rol naar de browser console (voor debuggen)
 if (isset($_SESSION['rol'])) {
     echo "<script>console.log('Ingelogd als rol: " . $_SESSION['rol'] . "');</script>";
 }

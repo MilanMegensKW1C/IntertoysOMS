@@ -1,7 +1,13 @@
 <?php
+/**
+ * FacturenModel
+ *
+ * Auteur: Milan
+ * Beschrijving: Bevat alle database functies voor facturen.
+ */
 class FacturenModel {
 
-    // Haal alle facturen op met bijbehorende order info
+    // Haal alle facturen op met bijbehorende order info.
     public static function getAll($conn) {
         $sql = "
             SELECT f.factuur_id, f.order_id, f.factuurdatum, f.totaalbedrag,
@@ -21,21 +27,21 @@ class FacturenModel {
         return $facturen;
     }
 
-    // Factuur toevoegen
+    // Voeg een nieuwe factuur toe.
     public static function add($conn, $data) {
         $stmt = $conn->prepare("INSERT INTO factuur (order_id, factuurdatum, totaalbedrag) VALUES (?, ?, ?)");
         $stmt->bind_param("isd", $data['order_id'], $data['factuurdatum'], $data['totaalbedrag']);
         $stmt->execute();
     }
 
-    // Factuur updaten
+    // Update een bestaande factuur.
     public static function update($conn, $data) {
         $stmt = $conn->prepare("UPDATE factuur SET order_id=?, factuurdatum=?, totaalbedrag=? WHERE factuur_id=?");
         $stmt->bind_param("isdi", $data['order_id'], $data['factuurdatum'], $data['totaalbedrag'], $data['factuur_id']);
         $stmt->execute();
     }
 
-    // Factuur verwijderen
+    // Verwijder een factuur.
     public static function delete($conn, $factuur_id) {
         $stmt = $conn->prepare("DELETE FROM factuur WHERE factuur_id=?");
         $stmt->bind_param("i", $factuur_id);

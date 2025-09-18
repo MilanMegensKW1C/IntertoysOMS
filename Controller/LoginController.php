@@ -1,39 +1,42 @@
 <?php
-require_once __DIR__ . '/../Model/User.php';
-require_once __DIR__ . '/../Includes/session.php';
+/**
+ * LoginController.php
+ *
+ * Auteur: Milan
+ * Beschrijving: Controller voor het afhandelen van login-logica.
+ */
 
-// Check of het formulier verzonden is
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    // Haal e-mail en wachtwoord op uit het POST-verzoek
-    $email = $_POST['email'];
+require_once '../Model/User.php';       // User model voor login-functionaliteit
+require_once '../Includes/session.php'; // Link met Session
+
+// Controleer of het formulier verzonden is via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Gegevens uit POST halen
+    $email      = $_POST['email'];
     $wachtwoord = $_POST['password'];
+    $remember   = isset($_POST['remember']);
 
-    // Check of de 'Remember me' checkbox is aangevinkt
-    $remember = isset($_POST['remember']);
-
-    // Maak een nieuw User object aan
+    // Maak User-model aan en probeer in te loggen
     $userModel = new User();
-
-    // Probeer in te loggen met het opgegeven e-mailadres en wachtwoord
     $user = $userModel->login($email, $wachtwoord);
 
-    // Als de login succesvol is
-    if ($user){
-        // Sla de gebruiker op in de session
+    // Als inloggen lukt
+    if ($user) {
+        // Sla gegevens van de gebruiker op in de sessie
         $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['rol'] = $user['rol'];
+        $_SESSION['email']   = $user['email'];
+        $_SESSION['rol']     = $user['rol'];
 
-        // Als 'Remember me' aangevinkt is, zet een cookie die 30 dagen geldig is
+        // Als "Remember me" aangevinkt is dan cookie zetten voor 30 dagen
         if ($remember === true) {
             setcookie('user_id', $user['user_id'], time() + (86400 * 30), "/");
         }
 
-        // Redirect naar een andere pagina, hier bijvoorbeeld het register formulier
+        // Doorsturen naar dashboard
         header("Location: ../view/dashboard.php");
         exit;
     } else {
-        // Als e-mail of wachtwoord niet klopt, een foutmelding tonen
+        // Ongeldige login = terug naar loginpagina met foutmelding
         header("Location: ../view/login.php?error=" . urlencode("Email of wachtwoord klopt niet!"));
         exit;
     }

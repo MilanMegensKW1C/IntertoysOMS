@@ -1,3 +1,11 @@
+/*
+ * login.css
+ *
+ * Auteur: Milan
+ * Beschrijving: Styling voor de loginpagina, inclusief formulier, titels, knoppen en extra opties.
+ */
+
+/* Algemene body/container styling */
 .loginpagina {
     display: flex;
     flex-direction: row;
@@ -8,7 +16,7 @@
     background-color: #ffdc00;
 }
 
-/* Titel links */
+/* Titel links op pagina */
 .loginpagina .titel {
     color: #fff;             
     -webkit-text-stroke: 2px black;
@@ -32,14 +40,14 @@
     align-items: center;
 }
 
-/* Titel van formulier */
+/* Titel binnen formulier */
 .loginpagina .form h1 {
     font-size: 28px;
     letter-spacing: 5px;
     margin-bottom: 0;
 }
 
-/* Labels */
+/* Input labels */
 .loginpagina .form label {
     align-self: flex-start;
     font-size: 14px;
@@ -52,14 +60,13 @@
 .loginpagina .form form input[type="text"] {
     width: 90%;
     padding: 8px;
-    margin: 0 0 0 0;
     border: 1px solid #000;
     border-radius: 10px;
     background-color: #f2f2f2;
     font-size: 16px;
 }
 
-/* Extra opties (onthouden + wachtwoord vergeten) */
+/* Extra opties onder formulier (onthouden & vergeten wachtwoord) */
 .loginpagina .form .extra {
     width: 90%;
     display: flex;
@@ -94,7 +101,6 @@
     margin: 10px 0 20px 0;
     transition: 0.2s ease;
 }
-
 .loginpagina .form form input[type="submit"]:hover {
     background-color: #ffdc00;
     transform: scale(1.05);
@@ -102,19 +108,19 @@
     transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
+/* Account-link onderin formulier */
 .loginpagina .form form .account-link {
     font-size: 14px;
 }
-
 .loginpagina .form form .account-link a {
     color: #000;
     transition: color 0.3s;
 }
-
 .loginpagina .form form .account-link a:hover {
     color: #ffdc00;
 }
 
+/* Form-layout */
 .loginpagina .form form {
     width: 100%;
     height: 100%;
@@ -124,6 +130,7 @@
     align-items: center;
 }
 
+/* Groepering van inputvelden */
 .loginpagina .form .input-group {
     width: 90%;
     display: flex;
@@ -138,12 +145,12 @@
     font-size: 14px;
 }
 
+/* Input-rijen (bijv. 2 velden naast elkaar) */
 .input-row {
     display: flex;
     gap: 16px;
     width: 90%;
 }
-
 .input-row .input-group {
     flex: 1;
     margin-bottom: 0;

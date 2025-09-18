@@ -1,3 +1,11 @@
+/*
+ * leveranciers.css
+ *
+ * Auteur: Milan
+ * Beschrijving: Styling voor leverancierspagina, inclusief tabel, knoppen en popups.
+ */
+
+/* Algemene body styling */
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -5,21 +13,28 @@ body {
     color: #333;
 }
 
-h1 { color: #f9e505; text-decoration: none; width: fit-content; }
-h2 { margin-bottom: 15px; }
+/* Titels */
+h1 { 
+    color: #f9e505; 
+    text-decoration: none; 
+    width: fit-content; 
+}
+h2 { 
+    margin-bottom: 15px; 
+}
 
+/* Link naar dashboard styling */
 .linkNaarDashboard {
-    text-decoration: none;  /* Geen onderstreping */
-    color: inherit;         /* Zelfde kleur als h1 */
-    display: inline-block;  /* Blok eigenschappen maar inline voor h1 */
-    cursor: pointer;        /* Wijs dat het klikbaar is */
+    text-decoration: none;  
+    color: inherit;         
+    display: inline-block;  
+    cursor: pointer;        
 }
-
 .linkNaarDashboard:hover {
-    color: #f9e505;         /* Hover effect */
+    color: #f9e505;         
 }
 
-
+/* Algemene knoppen styling */
 .btn {
     background-color: #ffdc00;
     color: white;
@@ -29,9 +44,11 @@ h2 { margin-bottom: 15px; }
     cursor: pointer;
     margin-bottom: 20px;
 }
+.btn:hover { 
+    background-color: #ffdc00; 
+}
 
-.btn:hover { background-color: #ffdc00; }
-
+/* Container voor individuele orders */
 .order-box {
     background: white;
     border: 1px solid #ddd;
@@ -40,15 +57,14 @@ h2 { margin-bottom: 15px; }
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
+/* Tabellen */
 table {
     width: 100%;
     border-collapse: collapse;
 }
-
 table tbody tr {
     cursor: pointer;
 }
-
 table th {
     cursor: pointer;
     user-select: none;
@@ -57,22 +73,12 @@ table th {
     text-align: left;
     padding: 10px;
 }
-
-table th.asc::after {
-    content: " ▲";
-    font-size: 12px;
-}
-
-table th.desc::after {
-    content: " ▼";
-    font-size: 12px;
-}
-
+table th.asc::after { content: " ▲"; font-size: 12px; }
+table th.desc::after { content: " ▼"; font-size: 12px; }
 table td {
     padding: 10px;
     border-bottom: 1px solid #eee;
 }
-
 table tr:nth-child(even) { background: #f2f2f2; }
 
 /* Algemene popup styling */
@@ -82,18 +88,14 @@ table tr:nth-child(even) { background: #f2f2f2; }
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.6); /* donkere achtergrond */
+    background-color: rgba(0,0,0,0.6); 
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 100;
     animation: fadeIn 0.3s ease-in-out;
 }
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
 
 .modal-content {
     background: white;
@@ -105,12 +107,9 @@ table tr:nth-child(even) { background: #f2f2f2; }
     position: relative;
     animation: slideDown 0.3s ease-in-out;
 }
+@keyframes slideDown { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
 
-@keyframes slideDown {
-    from {transform: translateY(-50px); opacity: 0;}
-    to {transform: translateY(0); opacity: 1;}
-}
-
+/* Sluitknop in popup */
 .closeBtn {
     position: absolute;
     top: 10px;
@@ -121,19 +120,15 @@ table tr:nth-child(even) { background: #f2f2f2; }
     color: #333;
     transition: color 0.2s;
 }
+.closeBtn:hover { color: #f9e505; }
 
-.closeBtn:hover {
-    color: #f9e505;
-}
-
-/* Formuliervelden */
+/* Formuliervelden in popup */
 .modal-content label {
     display: block;
     margin-top: 12px;
     font-weight: bold;
     color: #555;
 }
-
 .modal-content input[type="text"],
 .modal-content input[type="email"] {
     width: 100%;
@@ -145,6 +140,7 @@ table tr:nth-child(even) { background: #f2f2f2; }
     font-size: 14px;
 }
 
+/* Knoppen in popup */
 .modal-content button.btn {
     margin-top: 15px;
     padding: 10px 15px;
@@ -155,27 +151,23 @@ table tr:nth-child(even) { background: #f2f2f2; }
     font-size: 14px;
     transition: background 0.2s;
 }
-
 .modal-content button#saveBtn {
     background-color: #28a745;
     color: white;
 }
-
 .modal-content button#saveBtn:hover {
     background-color: #218838;
 }
-
 .modal-content button#deleteBtn {
     background-color: #dc3545;
     color: white;
     margin-left: 10px;
 }
-
 .modal-content button#deleteBtn:hover {
     background-color: #c82333;
 }
 
-/* Specifiek voor "Toevoegen popup" */
+/* Specifiek voor "Toevoegen leverancier" popup */
 #leverancierFormContainer {
     background: white;
     border-radius: 12px;

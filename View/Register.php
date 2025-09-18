@@ -1,22 +1,28 @@
 <?php
-    require_once __DIR__ . '/../Controller/RegisterController.php';
+/*
+ * register.php
+ *
+ * Auteur: Milan
+ * Beschrijving: Pagina voor het registreren van een nieuwe gebruiker. Roept de RegisterController aan bij POST-verzoeken.
+ */
 
-    //Controller aanroepen
-    $controller = new RegisterController();
+require_once '../Controller/RegisterController.php';
 
-    //Gebruik store functie in de controller
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controller->store();
-    }
+// Controller aanmaken
+$controller = new RegisterController();
+
+// Gebruik de 'store' functie in de controller
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controller->store();
+}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Custom icon -->
     <link rel="icon" type="image/x-icon" href="../Content/logo.ico">
-    <!-- Link to external CSS file -->
+    <!-- Link naar CSS -->
     <link rel="stylesheet" href="../styles/Login.css">
     <title>Registreren</title>
 </head>
@@ -26,11 +32,11 @@
         <h1>Intertoys<br>OMS</h1>
     </div>
     
-    <!-- Inlogformulier -->
+    <!-- Registratieformulier -->
     <div class="form">
         <h1>Registreer</h1>
         <form action="register.php" method="post">
-            <!-- Voornaam en Achternaam op één regel -->
+            <!-- Voornaam en Achternaam naast elkaar -->
             <div class="input-row">
                 <div class="input-group">
                     <label for="firstname">Voornaam</label>
@@ -42,19 +48,19 @@
                 </div>
             </div>
 
-            <!-- Adres veld -->
+            <!-- Adres -->
             <div class="input-group">
                 <label for="address">Adres</label>
                 <input type="text" id="address" name="address" required>
             </div>
 
-            <!-- Email veld -->
+            <!-- Email -->
             <div class="input-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
 
-            <!-- Wachtwoord veld -->
+            <!-- Wachtwoord -->
             <div class="input-group">
                 <label for="password">Wachtwoord</label>
                 <input type="password" id="password" name="password" required>
@@ -63,7 +69,7 @@
             <!-- Registreer knop -->
             <input type="submit" value="Registreer">
 
-            <!-- Account aanmaken -->
+            <!-- Link naar inloggen -->
             <div class="account-link">
                 <a href="login.php">Inloggen</a>
             </div>

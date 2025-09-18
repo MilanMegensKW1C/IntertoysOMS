@@ -1,12 +1,19 @@
 <?php
-include('../Includes/DB.php');
-include('../Model/LeveranciersModel.php');
+/*
+ * Leveranciers.php
+ *
+ * Auteur: Milan
+ * Beschrijving: Pagina voor het beheren van leveranciers. Laat leveranciers zien, toevoegen, bewerken en verwijderen.
+ */
+
+include('../Includes/DB.php');               // Database connectie
+include('../Model/LeveranciersModel.php');   // Leveranciers model
 
 session_start();
 
-// Controleer of iemand ingelogd is en of de rol klopt
+// Controleer of gebruiker ingelogd is en de juiste rol heeft
 if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], ['Admin', 'Productmanager'])) {
-    // Visuele waarschuwing voordat redirect
+    // Visuele waarschuwing en redirect naar dashboard
     echo "<script>
             alert('Geen toegang tot deze pagina! Je wordt teruggestuurd naar het dashboard.');
             window.location.href='/View/Dashboard.php';
@@ -14,11 +21,11 @@ if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], ['Admin', 'Productma
     exit;
 }
 
-// Rol beschikbaar maken (voor console of andere checks)
+// Rol beschikbaar maken voor eventuele checks
 $rol = $_SESSION['rol'];
 
-// Leveranciers ophalen
-$leveranciers = LeveranciersModel::getAll($conn) ?? []; // fallback naar lege array
+// Leveranciers ophalen uit de database
+$leveranciers = LeveranciersModel::getAll($conn) ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -27,10 +34,13 @@ $leveranciers = LeveranciersModel::getAll($conn) ?? []; // fallback naar lege ar
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leveranciers</title>
+    <!-- CSS -->
     <link rel="stylesheet" href="../styles/leveranciers.css">
+    <!-- JS voor popups -->
     <script src="../Javascript/LeverancierPopup.js" defer></script>
 </head>
 <body>
+<!-- Link naar dashboard -->
 <h1>
     <a href="/View/Dashboard.php" class="linkNaarDashboard">Intertoys OMS</a>
 </h1>
@@ -101,6 +111,7 @@ $leveranciers = LeveranciersModel::getAll($conn) ?? []; // fallback naar lege ar
         <span class="closeBtn">&times;</span>
         <h3>Leverancier bewerken</h3>
         <form id="editForm" method="post">
+            <!-- Hidden veld voor leverancier_id -->
             <input type="hidden" name="leverancier_id" id="edit_id">
 
             <label>Bedrijfsnaam:</label>

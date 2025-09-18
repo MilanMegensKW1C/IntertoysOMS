@@ -1,8 +1,16 @@
 <?php
-require_once __DIR__ . '/../Includes/Session.php';
+/*
+ * Dashboard.php
+ *
+ * Auteur: Milan
+ * Beschrijving: Dashboard pagina voor ingelogde gebruikers.
+ */
 
+require_once '../Includes/Session.php'; // Start of hervat de sessie
+
+// Check of de gebruiker is ingelogd
 if (!isset($_SESSION['user_id'])) {
-    header("Location: Login.php");
+    header("Location: Login.php"); // Redirect naar login als niet ingelogd
     exit;
 }
 ?>
@@ -11,21 +19,25 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Custom icon -->
     <link rel="icon" type="image/x-icon" href="../Content/logo.ico">
-    <!-- Titel van de website -->
     <title>Dashboard</title>
+    <!-- CSS voor het dashboard -->
     <link rel="stylesheet" href="../styles/Dashboard.css">
 </head>
 <body>
     <div class="dashboard-container">
+        <!-- Welkomsttekst -->
         <h1>Welkom op het Dashboard</h1>
+
+        <!-- Navigatieknoppen naar verschillende modules -->
         <div class="dashboard-buttons">
             <a href="../View/" class="dashboard-btn">Product</a>
             <a href="../View/Leveranciers.php" class="dashboard-btn">Leveranciers</a>
             <a href="../View/Facturen.php" class="dashboard-btn">Facturen</a>
             <a href="../View/Orders.php" class="dashboard-btn">Orders</a>
         </div>
+
+        <!-- Link om uit te loggen -->
         <a href="../View/Logout.php" class="logout-link">Uitloggen</a>
     </div>
 </body>

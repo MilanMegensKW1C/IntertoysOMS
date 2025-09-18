@@ -1,21 +1,30 @@
 <?php
-include('../Includes/DB.php');
-include('../Model/FacturenModel.php');
+/*
+ * Facturen.php
+ *
+ * Auteur: Milan
+ * Beschrijving: Beheert het overzicht van facturen. Laat facturen zien, toevoegen, bewerken en verwijderen.
+ */
+
+include('../Includes/DB.php');             // Database connectie
+include('../Model/FacturenModel.php');     // Facturen model
 
 session_start();
 
-// Alleen Admin / Productmanager toegang
+// Alleen Admin of Backofficemedewerker toegang
 if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], ['Admin', 'Backofficemedewerker'])) {
     echo "<script>alert('Geen toegang tot deze pagina!'); window.location.href='/View/Dashboard.php';</script>";
     exit;
 }
 
 $rol = $_SESSION['rol'];
+
+// Haal alle facturen op
 $facturen = FacturenModel::getAll($conn) ?? [];
 
-// Haal orders op voor de dropdown met berekend totaalbedrag
+// Haal orders op voor dropdown in form met berekend totaalbedrag
 $ordersResult = $conn->query("
-    SELECT o.order_id, 
+    SELECT o.order_id,
            CONCAT('Order ', o.order_id, ' - ', o.orderdatum, ' - ', o.status) AS label,
            IFNULL(SUM(op.aantal * p.prijs),0) AS totaal
     FROM `order` o
@@ -25,6 +34,7 @@ $ordersResult = $conn->query("
     ORDER BY o.orderdatum DESC
 ");
 
+// Zet orders in array
 $orders = [];
 if ($ordersResult && $ordersResult->num_rows > 0) {
     while ($o = $ordersResult->fetch_assoc()) {
@@ -38,10 +48,13 @@ if ($ordersResult && $ordersResult->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facturen</title>
+    <!-- CSS -->
     <link rel="stylesheet" href="../styles/leveranciers.css">
+    <!-- JS voor popups -->
     <script src="../Javascript/FacturenPopup.js" defer></script>
 </head>
 <body>
+<!-- Link naar dashboard en titel -->
 <h1>
     <a href="/View/Dashboard.php" class="linkNaarDashboard">Intertoys OMS</a>
 </h1>
@@ -78,6 +91,7 @@ if ($ordersResult && $ordersResult->num_rows > 0) {
     </div>
 </main>
 
+<!-- Overzicht facturen -->
 <div class="order-box">
     <table>
         <thead>
@@ -117,6 +131,7 @@ if ($ordersResult && $ordersResult->num_rows > 0) {
         <span class="closeBtn">&times;</span>
         <h3>Factuur bewerken</h3>
         <form id="editForm" method="post">
+            <!-- Hidden veld voor factuur_id -->
             <input type="hidden" name="factuur_id" id="edit_id">
 
             <label>Order:</label>
