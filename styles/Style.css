@@ -1,0 +1,14 @@
+/*
+ * Style.css
+ *
+ * Auteur: Milan
+ * Beschrijving: Bevat custom font "Chaloops" voor gebruik in paginas
+ */
+
+/* Importeren van custom font Chaloops */
+@font-face {
+    font-family: "Chaloops"; 
+    src: url("../Fonts/Chaloops\ W00\ Bd.ttf") format("truetype"); 
+    font-weight: normal; 
+    font-style: normal; 
+}
